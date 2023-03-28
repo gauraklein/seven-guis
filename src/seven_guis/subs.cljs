@@ -1,8 +1,13 @@
 (ns seven-guis.subs
   (:require
-   [re-frame.core :as re-frame]))
+   [re-frame.core :as rf]))
 
-(re-frame/reg-sub
- ::name
+(rf/reg-sub 
+ ::count
  (fn [db]
-   (:name db)))
+   (:count db)))
+
+(rf/reg-sub
+ ::temp 
+ (fn [db]
+   (:temp db)))
