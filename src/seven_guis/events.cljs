@@ -104,3 +104,42 @@
 
 ;; CRUD
 
+(rf/reg-event-db
+ ::set-prefix
+ (fn [db [_ v]]
+   (assoc-in db [:crud :prefix] v)))
+
+(rf/reg-event-db 
+ ::set-selected
+ (fn [db [_ v]]
+   (let [records (-> db :crud :records)]
+     (-> db
+         (assoc-in [:crud :selected] v)
+         (assoc-in [:crud :temp-record] (get records v))))))
+
+(rf/reg-event-db 
+ ::update-temp-record
+ (fn [db [_ k v]]
+   (assoc-in db [:crud :temp-record k] v)))
+
+(rf/reg-event-db
+ ::update-record
+ (fn [db _]
+   (let [{:keys [selected temp-record]} (:crud db)]
+     (assoc-in db [:crud :records selected] temp-record))))
+
+(rf/reg-event-db 
+ ::delete-record
+ (fn [db _]
+ (let [selected (-> db :crud :selected)]
+   (update-in db [:crud :records] dissoc selected))
+   ))
+
+(rf/reg-event-db 
+ ::create-record
+ (fn [db _]
+   (let [temp-record (-> db :crud :temp-record)]
+     (when (and (seq temp-record)
+                (:name temp-record)
+                (:surname temp-record)))
+     (assoc-in db [:crud :records (random-uuid)] temp-record))))

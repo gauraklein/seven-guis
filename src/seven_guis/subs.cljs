@@ -17,3 +17,7 @@
 (rf/reg-sub 
  ::timer
  (fn [db] (:timer db)))
+
+(rf/reg-sub
+ ::crud 
+ (fn [db] (:crud db)))
