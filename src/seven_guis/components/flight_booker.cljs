@@ -22,7 +22,7 @@
 
   (defn flight-booker
     []
-    (let [{:keys [one-way? start-date end-date message] :as flight-data} @(rf/subscribe [::subs/flight-booker])]
+    (let [{:keys [one-way? start-date end-date message] :as flight-data} @(rf/subscribe [::subs/flight])]
       [:div {:style {:display "flex"
                      :flex-direction "column"
                      :max-width "300px"}}

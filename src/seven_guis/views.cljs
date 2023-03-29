@@ -2,11 +2,13 @@
   (:require
    [seven-guis.components.counter :refer [counter]]
    [seven-guis.components.temp-converter :refer [temp-converter]]
-   [seven-guis.components.flight-booker :refer [flight-booker]]))
+   [seven-guis.components.flight-booker :refer [flight-booker]]
+   [seven-guis.components.timer :refer [timer]]))
 
 (defn main-panel []
   [:div
    [:h1 "7 GUIS"]
    [counter]
    [temp-converter]
-   [flight-booker]])
+   [flight-booker]
+   [timer]])

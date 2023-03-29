@@ -4,15 +4,16 @@
 
 (rf/reg-sub 
  ::count
- (fn [db]
-   (:count db)))
+ (fn [db] (:count db)))
 
 (rf/reg-sub
  ::temp 
- (fn [db]
-   (:temp db)))
+ (fn [db] (:temp db)))
 
 (rf/reg-sub
  ::flight
- (fn [db]
-   (:flight db)))
+ (fn [db] (:flight db)))
+
+(rf/reg-sub 
+ ::timer
+ (fn [db] (:timer db)))
