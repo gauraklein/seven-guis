@@ -3,7 +3,13 @@
 (def default-db
   {:name "re-frame"
    :count 0
-   ;; TODO: maybe nest these keys under :temp
+   ;; TODO: make sure empty strings work here
    :temp {:celsius nil
           :fahrenheit nil
-          :error nil}})
+          :error nil}
+   :flight {:one-way? false
+                   :start-date {:val ""
+                                :valid? true}
+                   :end-date {:val ""
+                              :valid? true}
+                   :message ""}})

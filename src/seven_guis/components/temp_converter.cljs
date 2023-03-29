@@ -4,7 +4,7 @@
    [seven-guis.subs :as subs]
    [seven-guis.events :as events]))
 
-
+;; TODO: allow the input val to be displayed when in error and set the bg color accordingly
 (defn temp-converter
   []
   (let [{:keys [celsius fahrenheit error]} @(rf/subscribe [::subs/temp])]

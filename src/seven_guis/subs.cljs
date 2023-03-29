@@ -11,3 +11,8 @@
  ::temp 
  (fn [db]
    (:temp db)))
+
+(rf/reg-sub
+ ::flight
+ (fn [db]
+   (:flight db)))

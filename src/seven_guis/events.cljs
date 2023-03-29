@@ -32,5 +32,35 @@
  (fn [db [_ k v]]
    (if (re-matches #"\d+" v)
      (assoc db :temp (update-temp k v))
-     (assoc-in db [:temp :error] "Error, please use a number"))))
+     (-> db
+         (assoc-in [:temp k] v)
+         (assoc-in [:temp :error] "Error, please use a number")))))
 
+(rf/reg-event-db 
+ ::set-flight-type
+ (fn [db [_ type]]
+   (assoc-in db [:flight :one-way?] (= type "one-way"))))
+
+(defn- valid-date?
+  [date-string]
+  (and
+   (seq date-string) 
+   (re-matches #"[0-9]{2}\.[0-9]{2}\.[0-9]{4}" date-string)))
+
+(rf/reg-event-db
+ ::set-flight-date
+ (fn [db [_ k v]]
+   (-> db
+       (assoc-in [:flight k :val] v)
+       (assoc-in [:flight k :valid?] (valid-date? v)))))
+
+(defn- confirmation-message
+  [{:keys [one-way? start-date end-date]}]
+  (if one-way?
+    (str "You have booked a one-way flight on " (:val start-date))
+    (str "You have booked a return flight from " (:val start-date) " to " (:val end-date))))
+
+(rf/reg-event-db
+ ::book-flight
+ (fn [db _]
+    (assoc-in db [:flight :message] (confirmation-message (:flight db)))))
