@@ -24,39 +24,41 @@
   []
   (fn []
     (let [{:keys [prefix temp-record selected records]} @(rf/subscribe [::subs/crud])]
-      [:div
-       [:h3 "CRUD"]
-       [:div
-        [:label "Filter prefix: "]
-        [:input {:type "text" :value prefix :on-change #(rf/dispatch [::events/set-prefix (-> % .-target .-value)])}]]
-       [:div {:style {:display "flex"}}
-        (into [:select {:size 5 :style {:width "150px"}}]
-              (if (seq prefix)
-                (let [filtered-records (filter-by-prefix records prefix)]
-                  (map #(generate-row %) filtered-records))
-                (map #(generate-row %) records)))
-        [:div
+      [:div {:class "window"}
+       [:div {:class "title-bar"}
+        [:h3 "CRUD"]]
+        [:div {:class "window-body"}
          [:div
-          [:label "Name: "]
-          [:input {:type "text" 
-                   :value (:name temp-record) 
-                   :on-change #(rf/dispatch [::events/update-temp-record :name (-> % .-target .-value)])}]]
+          [:label "Filter prefix: "]
+          [:input {:type "text" :value prefix :on-change #(rf/dispatch [::events/set-prefix (-> % .-target .-value)])}]]
+         [:div {:style {:display "flex"}}
+          (into [:select {:size 5 :style {:width "150px"}}]
+                (if (seq prefix)
+                  (let [filtered-records (filter-by-prefix records prefix)]
+                    (map #(generate-row %) filtered-records))
+                  (map #(generate-row %) records)))
+          [:div
+           [:div
+            [:label "Name: "]
+            [:input {:type "text"
+                     :value (:name temp-record)
+                     :on-change #(rf/dispatch [::events/update-temp-record :name (-> % .-target .-value)])}]]
+           [:div
+            [:label "Surname: "]
+            [:input {:type "text"
+                     :value (:surname temp-record)
+                     :on-change #(rf/dispatch [::events/update-temp-record :surname (-> % .-target .-value)])}]]]]
          [:div
-          [:label "Surname: "]
-          [:input {:type "text" 
-                   :value (:surname temp-record) 
-                   :on-change #(rf/dispatch [::events/update-temp-record :surname (-> % .-target .-value)])}]]]]
-       [:div
-        [:input {:type "button" 
-                 :value "Create"
-                 :on-click #(rf/dispatch [::events/create-record]) 
-                 :disabled (not (and (seq (:name temp-record))
-                                     (seq (:surname temp-record))))}]
-        [:input {:type "button"
-                 :value "Update" 
-                 :on-click #(rf/dispatch [::events/update-record]) 
-                 :disabled (nil? selected)}]
-        [:input {:type "button" 
-                 :value "Delete" 
-                 :on-click #(rf/dispatch [::events/delete-record]) 
-                 :disabled (nil? selected)}]]])))
+          [:input {:type "button"
+                   :value "Create"
+                   :on-click #(rf/dispatch [::events/create-record])
+                   :disabled (not (and (seq (:name temp-record))
+                                       (seq (:surname temp-record))))}]
+          [:input {:type "button"
+                   :value "Update"
+                   :on-click #(rf/dispatch [::events/update-record])
+                   :disabled (nil? selected)}]
+          [:input {:type "button"
+                   :value "Delete"
+                   :on-click #(rf/dispatch [::events/delete-record])
+                   :disabled (nil? selected)}]]]])))

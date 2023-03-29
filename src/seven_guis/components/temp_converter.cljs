@@ -8,13 +8,16 @@
 (defn temp-converter
   []
   (let [{:keys [celsius fahrenheit error]} @(rf/subscribe [::subs/temp])]
-    [:div
-     [:h3 "Temperature Converter"
-      [:div
-       (when :error [:h3 {:style {:color "red"}} error])
-       [:input {:type "text" :value celsius
-                :on-change #(rf/dispatch [::events/calc-temp :celsius (-> % .-target .-value)])}]
-       " Celsius = "
-       [:input {:type "text" :value fahrenheit
-                :on-change #(rf/dispatch [::events/calc-temp :fahrenheit (-> % .-target .-value)])}]
-       " Fahrenheit"]]]))
+    [:div {:class "window"}
+     [:div {:class "title-bar"}
+      [:h3 "Temperature Converter"]]
+     [:div {:class "window-body"}
+      (when :error [:p {:style {:color "red"}} error])
+      [:input {:type "text"
+               :value celsius
+               :on-change #(rf/dispatch [::events/calc-temp :celsius (-> % .-target .-value)])}]
+      " Celsius = "
+      [:input {:type "text" 
+               :value fahrenheit
+               :on-change #(rf/dispatch [::events/calc-temp :fahrenheit (-> % .-target .-value)])}]
+      " Fahrenheit"]]))

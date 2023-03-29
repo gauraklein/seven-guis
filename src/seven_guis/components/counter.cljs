@@ -7,10 +7,12 @@
 (defn counter
   []
   (let [count @(rf/subscribe [::subs/count])]
-    [:div
-     ;; TODO: Seperate these elements into their own components
-     [:h3 "Counter"]
-     [:div
-      [:label count " "]
-      [:input {:type "button" :value "Increment"
+    [:div {:class "window"}
+     [:div {:class "title-bar"}
+      [:h3 "Counter"]]
+     [:div {:class "window-body"}
+      [:label {:class "label"} count]
+      [:input {:type "button"
+               :class "button"
+               :value "Increment"
                :on-click #(rf/dispatch [::events/inc-counter])}]]]))

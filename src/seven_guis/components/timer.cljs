@@ -10,18 +10,22 @@
     (fn []
       (let [{:keys [duration current interval]} @(rf/subscribe [::subs/timer])]
         (when (>= current duration) (js/clearInterval interval))
-        [:div
-         [:h3 "Timer"]
-         [:div
-          [:label "Elapsed Time: "]
-          [:progress {:value current :max duration}]]
-         [:p (str current "s")]
-         [:div
-          [:label "Duration: "]
-          [:input {:type "range" 
-                   :value duration 
-                   :max 25
-                   :on-change #(rf/dispatch [::events/set-duration (-> % .-target .-value)])}]]
-         [:input {:type "button" 
-                  :value "Reset" 
+        [:div {:class "window"}
+         [:div {:class "title-bar"}
+          [:h3 "Timer"]]
+         [:div {:class "window-body"}
+          [:div
+           [:label "Elapsed Time: "]
+           [:progress {:value current :max duration}]]
+          [:p (str current "s")]
+          [:div
+           [:label "Duration: "]
+           [:input {:type "range"
+                    :class "range"
+                    :value duration
+                    :max 25
+                    :on-change #(rf/dispatch [::events/set-duration (-> % .-target .-value)])}]]]
+         [:input {:type "button"
+                  :class "button"
+                  :value "Reset"
                   :on-click #(rf/dispatch [::events/reset-timer])}]]))))

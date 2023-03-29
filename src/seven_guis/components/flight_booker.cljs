@@ -23,24 +23,26 @@
   (defn flight-booker
     []
     (let [{:keys [one-way? start-date end-date message] :as flight-data} @(rf/subscribe [::subs/flight])]
-      [:div {:style {:display "flex"
-                     :flex-direction "column"
-                     :max-width "300px"}}
-       [:h3 "Flight Booker"]
-       [:select {:on-change #(rf/dispatch [::events/set-flight-type (-> % .-target .-value)])}
-        [:option {:value "return"} "return flight"]
-        [:option {:value "one-way"} "one way flight"]]
-       [:input {:type "text"
-                :value (:val start-date)
-                :style (when (not (:valid? start-date)) {:background-color "red"})
-                :on-change #(rf/dispatch [::events/set-flight-date :start-date (-> % .-target .-value)])}]
-       [:input {:type "text"
-                :disabled one-way?
-                :value (:val end-date)
-                :style (when (not (:valid? end-date)) {:background-color "red"})
-                :on-change #(rf/dispatch [::events/set-flight-date :end-date (-> % .-target .-value)])}]
-       [:input {:type "button"
-                :value "Book"
-                :disabled (not (able-to-book? flight-data))
-                :on-click #(rf/dispatch [::events/book-flight])}]
-       (when message [:h4 message])]))
+      [:div {:class "window"}
+       [:div {:class "title-bar"}
+        [:h3 "Flight Booker"]]
+       [:div {:class "window-body"
+              :style {:display "flex"
+                      :flex-direction "column"}}
+        [:select {:on-change #(rf/dispatch [::events/set-flight-type (-> % .-target .-value)])}
+         [:option {:value "return"} "return flight"]
+         [:option {:value "one-way"} "one way flight"]]
+        [:input {:type "text"
+                 :value (:val start-date)
+                 :style (when (not (:valid? start-date)) {:background-color "red"})
+                 :on-change #(rf/dispatch [::events/set-flight-date :start-date (-> % .-target .-value)])}]
+        [:input {:type "text"
+                 :disabled one-way?
+                 :value (:val end-date)
+                 :style (when (not (:valid? end-date)) {:background-color "red"})
+                 :on-change #(rf/dispatch [::events/set-flight-date :end-date (-> % .-target .-value)])}]
+        [:input {:type "button"
+                 :value "Book"
+                 :disabled (not (able-to-book? flight-data))
+                 :on-click #(rf/dispatch [::events/book-flight])}]
+        (when message [:h4 message])]]))
