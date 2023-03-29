@@ -1,4 +1,8 @@
-
+body {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
 .window {
     max-width: 40rem;
     border: solid 3px black;

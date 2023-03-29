@@ -8,7 +8,7 @@
 
 (defn main-panel []
   [:div
-   [:h1 "7 GUIS"]
+   [:h1 "5/7 GUIS"]
    [counter]
    [temp-converter]
    [flight-booker]
