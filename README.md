@@ -1,5 +1,7 @@
 # seven-guis
 
+Deployed [here](https://clever-marigold-2dacd9.netlify.app/)
+
 I chose to use `shadow-cljs` with `reagent` and `reframe` as the stack for this challenge.
 
 This challenge was fun to do and I feel that I've implemented the requirements to the best of my ability. There are some areas in which I would like to improve if I had more time. Those are as follows:
