@@ -6,7 +6,6 @@ This challenge was fun to do and I feel that I've implemented the requirements t
 - Break up the `events ns` a bit. Currently it's a wall of events, I think gui specific files would make the most sense.
 - Add better error handling for inputs. I halfway implemented an error state for the temperature converter but it would be nice to add some clear messaging and symbols to the different guis when we reach error states.
 - Add some unit tests
-- Spend a bit more time styling the app
 
 ### Running the App
 
